@@ -9,7 +9,7 @@ Voici le Fruits Memory Game, un jeu memory classique sur navigateur.
 
 ## Utilisation
 
-- utilisez la commande `docker compose up`.
+- utilisez la commande `docker-compose up`.
 - naviguez vers votre [localhost](http://localhost:8080) sur le port spécifié (8080 par défaut)
 
 
