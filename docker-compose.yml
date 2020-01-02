@@ -1,0 +1,17 @@
+version: "3"
+
+services: 
+  game:
+    depends_on: 
+      - mongo
+    build: .
+    ports: 
+      - "8080:3000"
+  mongo:
+    image: mongo:latest
+    environment: 
+      - MONGO_DATA_DIR=/data/db
+    volumes: 
+      - ./data/db:/data/db
+    ports: 
+      - "27017:27017"

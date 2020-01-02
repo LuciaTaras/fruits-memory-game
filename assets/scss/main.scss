@@ -1,0 +1,380 @@
+// CE COMMENTAIRE NE SERA PAS VISIBLE DANS LE FILE CSS CAR IL EST INTRODUIT PAR '//'.
+// Grâce à Sass on peut optimiser l'écriture des feuilles de styles CSS.
+// Ce préprocesseur offre un arsenal de fonctions pour la productivité : code allégé et simplifié, variables, mixins, fonctions, placeholders, concaténation, validation de code à la volée. 
+// Donc ... DRY & KISS !
+// [ DRY = Don't Repeat Yourself | KISS = Keep It Simple Stupid ]
+
+
+// Les variables sont sans aucun doute l'une des caractéristiques les plus utiles et intéressantes de Sass pour écrire du code plus facile à maintenir, 
+// puisque on peut éviter d'avoir à réécrire la même valeur dans différentes parties d'une ou plusieurs feuilles de style.  */
+
+
+// Initialiser les variables
+$primary-color: #DF000A;
+$secondary-color: #A7BE81;
+$text-color: #555;
+$base-color: #FFF;
+$font-hand: 'Indie Flower', cursive;
+$font-text: Helvetica, sans-serif;
+$link-color: #6DB62B;
+$color-hover: darken($link-color, 10%); // fonction SASS qui assombrit la couleur
+$color-focus: lighten($link-color, 30%); // fonction SASS qui éclaircit la couleur
+
+// Utiliser em pour responsive font size
+$browser-context: 16;
+
+// function pour convertir px en em (car en px c'est toujour plus facile ... )
+@function em($pixels, $context: $browser-context) {
+    @return #{$pixels/$context}em;
+}
+
+// Des jolies shadow's effects ?
+$bottom-diffused: 0px 13px 21px -10px rgba(0, 0, 0, 0.4);
+$top-diffused: 0px -10px 10px -10px rgba(0, 0, 0, 0.4);
+
+// Les mixins de Sass sont un outil configurable grâce auquel il est possible de regrouper un bloc d'instructions pour être réutilisé plusieurs fois. */
+
+// Mixin pour shadow's effects
+@mixin box-shadow($shadow) {
+    box-shadow: $shadow;
+}
+
+// Pour les bordures,. qui seront toujours les mêmes
+@mixin border {
+    border: 1px solid $secondary-color;
+};
+
+// Pour les backgrounds
+@mixin background {
+  background-image: url(../img/bg.png);
+  background-repeat: repeat;
+  background-color: $base-color;
+};
+
+// Mixin pour une simple media querie : la mise en page est très basique, nous n'avons pas besoin de beaucoup
+@mixin for-responsive {
+  @media (max-width: 799px) { @content; }
+}
+
+// Mixin pour compter le padding comme faisant partie de la largeur
+@mixin box-sizing($box-model) {
+  -webkit-box-sizing: $box-model; /* Fix Safari <= 5 */
+  -moz-box-sizing: $box-model; /* Fix Firefox <= */
+  box-sizing: $box-model;
+  }
+
+// Les CSS...
+body {
+  font: em(20) $font-hand; 
+  color: $text-color;
+  padding: 0;
+  margin: 0;
+  -webkit-text-size-adjust: 100%; /* Fix pour iOS  */
+  @include background;
+}
+h1 {
+  // 50px
+  font: em(50) $font-hand;
+  color: $primary-color;
+  padding: 0px;
+  margin:0px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+h2 {
+  // 25px
+  font: em(25) $font-hand;
+  color: $secondary-color;
+  padding: 0px;
+  margin:0px;
+  .red {
+    color: lighten($primary-color, 10%);
+  }
+}
+h3 {
+  // 30px
+  font: em(30) $font-hand;
+  color: $primary-color;
+  padding: 0px;
+  margin:0px;
+  text-transform: uppercase;
+  text-align: center;
+}
+// L’imbrication des règles est la principale caractéristique de SASS. 
+// Grâce à elle, l’écriture du code est beaucoup plus rapide, simple et compréhensible ( ce h2 avec class pour un span est un exemple simple )
+
+/* Ouverture du jeu  */
+.popin-container{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  @include background;
+  .popin{
+    width: 500px;
+    margin: auto;
+    position: relative;
+    background-color: $base-color;
+    margin-top: 5%;
+    text-align: center;
+    padding: 50px 20px 50px 20px;
+    @include box-sizing(border-box);
+    @include box-shadow($bottom-diffused);
+    @include border;
+    @include for-responsive { 
+      width: 95%;
+    }
+    p.score {
+      font: em(13) $font-text;
+      margin:0;
+      padding:5px 0 5px 0;
+      border-bottom: 1px solid $secondary-color;
+      .red{
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+.play-button {
+  width: 50%;
+  background-color: $link-color;
+  color: $base-color;
+  padding: 4px;
+  font: em(20) $font-hand;
+  margin: auto;
+  border-radius: 4px;
+  cursor: pointer;
+  @include box-shadow($bottom-diffused);
+  &:hover {
+    // & : représente l'élément parent
+    background-color: $color-hover;
+    @include box-shadow($top-diffused);
+  }
+}
+
+/* Plateau de jeu  */
+.game-container{
+  width: 800px;
+  @include border;
+  @include box-sizing(border-box);
+  @include box-shadow($bottom-diffused);
+  @include for-responsive { 
+    width: 100%;
+  }
+  margin: 20px auto;
+  background-color: $base-color;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  p {
+    clear: both;
+    text-align: center;
+    padding: 20px 10px 0px 10px;
+    margin: 0px;
+  }
+}
+.timer{
+  font: em(25) $font-hand; 
+  text-align: center;
+}
+.card-container{
+  margin: auto;
+  width: 700px;
+  @include for-responsive { 
+    width: 100%;
+  }
+}
+
+/* Le conteneur flip card */
+.flip-card {
+  float: left;
+  width: 100px;
+  height: 100px;
+  padding: 2px;
+  @include box-sizing(border-box);
+  perspective: 1000px; 
+  @include for-responsive { 
+    width: 25vw;
+    height: 25vw;
+    /* les unités de mesure vw et vh liées à la fenêtre de visualisation, introduites en CSS3. 
+    On dit qu'une carte doit être 1/4 la fenêtre de visualisation, en largeur et en hauteur, parce que nous les voulons carrés. 
+    Facile de faire du responsive ... */
+  }
+}
+
+/* Ce conteneur est nécessaire pour positionner la face avant et la face arrière de al carte */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/*Pour un retournement horizontal au click */
+.rotate180{
+  transform: rotateY(180deg);
+  @include border;
+  @include box-sizing(border-box);
+  -webkit-transform: rotateY(180deg);
+}
+
+/* Positionner les deux côtés de la carte */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Pour Safari */
+  -moz-backface-visibility: hidden; /* Pour Firefox */
+  background-color: $base-color;
+  border-radius: 5px;     
+}
+
+/* Style des deux côtés de la carte  */
+.flip-card-front {
+  background-image: url(../img/front.png);
+  background-position: center center;
+}
+.flip-card-back {
+  background-image: url(../img/cards.png);
+  transform: rotateY(180deg);
+  background-size: 100%;
+}
+/*  Attention : nous utilisons une seule image pour tous les fruits (sprite). Son positionnement est géré par js */
+
+#progressBar {
+  width: 80%;
+  margin: 0px auto;
+  height: 22px;
+  background-color: lighten($text-color, 60%);
+  .bar{
+    height: 100%;
+    text-align: right;
+    padding: 0 10px;
+    line-height: 22px; /* la même que #progressBar height pour que le texte soit aligné au milieu */
+    width: 0;
+    background-color: $secondary-color;
+    box-sizing: border-box;
+    color: $base-color;
+    
+  }
+}
+
+/* Modal */
+.modal {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 20; 
+  overflow: auto; /* s'il le faut... */
+  background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+  /* Modal Content */
+  .modal-content {
+    width: 500px;
+    margin: auto;
+    position: relative;
+    background-color: $base-color;
+    margin-top: 5%;
+    text-align: center;
+    padding: 0px;
+    @include box-sizing(border-box);
+    @include box-shadow($bottom-diffused);
+    @include border;
+    @include for-responsive { 
+      width: 95%;
+    }
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    @include for-responsive { 
+      width: 95%;
+    }
+    .modal-header {
+      padding: 50px 20px 0px 20px;
+      /* Close Button */
+      .close {
+        color: $text-color;
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        font: em(30) $font-hand;
+      }&:hover {
+        color: $color-hover;
+        cursor: pointer;
+      }
+    }
+    .modal-body {
+      padding: 2px 16px;
+      .timer{
+        font: em(45) $font-hand; 
+        color: lighten($primary-color, 20%);
+      }
+    }
+    .modal-footer {
+      padding: 0px 20px 50px 20px;
+    }
+  }
+  /* Modal Animation */
+  @-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+  }
+  @keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+  }
+}
+
+/* Form */
+#score_form{
+  display: none;
+  p {
+    padding: 0;
+    margin: 0;
+  }
+}
+input{
+  width:100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 5px auto;
+  font: em(12) $font-text;
+  @include box-sizing(border-box);
+  @include for-responsive { 
+    width: 95%;
+  }
+}
+
+.score-button {
+  width: 80%;
+  background-color: $primary-color;;
+  color: $base-color;
+  padding: 4px;
+  font: em(20) $font-hand;
+  margin: 10px auto;
+  cursor: pointer;
+  @include box-shadow($bottom-diffused);
+  &:hover {
+    // & : représente l'élément parent
+    background-color: darken($primary-color, 5%);;
+    @include box-shadow($top-diffused);
+  }
+}
+label {display: none;}
+fieldset {border:none;}
+.error{
+  font: em(10) $font-text;
+  text-transform: uppercase;
+  color: lighten($primary-color, 20%);
+}

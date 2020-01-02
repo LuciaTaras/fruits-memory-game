@@ -1,0 +1,58 @@
+<div class="popin-container">
+    <div class="popin">
+        <h1>Fruits memory</h1>
+        <h2>{{scoreTitle}}</h2>
+        <div id="list">
+        {{#each score}}
+          <p class="score"><strong>{{{nome}}} </strong> le {{formatData}} : <span class="red">{{best_time_display}}</span> </p>
+        {{/each}}
+        </div>
+        <p>Trouve les 14 paires de fruits identiques ! <br>Tu auras 3 minutes ... &#128522;</p>
+        <div class="play-button" onclick="closePopin()">JE JOUE !</div>
+    </div>
+</div>
+<div class="game-container">
+    <h3>Fruits memory</h3>
+    <div class="timer">00:00:000
+    </div>
+    <div class="card-container">
+    </div>
+    <p>Le temps qu'il te reste ...</p>
+    <div id="progressBar">
+        <div class="bar"></div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h1>Fruits memory</h1>
+        </div>
+        <div class="modal-body">
+            <h2 id="the-end"></h2>
+            <span id="result"></span>
+            <div class="timer" id="temps"></div>
+            <div id="score_form">
+                <form name="score" id="scoreForm" method="POST">
+                   <fieldset>
+                        <input type="hidden" name="time_display" id="time_display" value="">
+                        <input type="hidden" name="time_millisecond" id="time_millisecond" value="">
+                        <input type="text" name="name" id="name" value="" class="text-input"
+                            placeholder="Ton Nick Name ...">
+                        <label class="error" for="name" id="name_error">Comment t'appelles-tu ?</label>
+                        <input type="text" id="email" name="email" value="" class="text-input"
+                            placeholder="Ton email ..." />
+                        <label class="error" for="email" id="email_error">C'est obligatoire ... qu'il soit valide !</label>
+                        <input type="submit" name="submit_form" class="score-button" value="J'ENREGISTRE MON SCORE" />
+                    </fieldset>
+                </form>
+                <p>ou alors ...</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="play-button" onclick="closeModal()">JE REJOUE !</div>
+        </div>
+    </div>
+</div>

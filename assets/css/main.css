@@ -1,0 +1,324 @@
+@charset "UTF-8";
+body {
+  font: 1.25em "Indie Flower", cursive;
+  color: #555;
+  padding: 0;
+  margin: 0;
+  -webkit-text-size-adjust: 100%;
+  /* Fix pour iOS  */
+  background-image: url(../img/bg.png);
+  background-repeat: repeat;
+  background-color: #FFF; }
+
+h1 {
+  font: 3.125em "Indie Flower", cursive;
+  color: #DF000A;
+  padding: 0px;
+  margin: 0px;
+  text-transform: uppercase;
+  line-height: 1; }
+
+h2 {
+  font: 1.5625em "Indie Flower", cursive;
+  color: #A7BE81;
+  padding: 0px;
+  margin: 0px; }
+  h2 .red {
+    color: #ff131e; }
+
+h3 {
+  font: 1.875em "Indie Flower", cursive;
+  color: #DF000A;
+  padding: 0px;
+  margin: 0px;
+  text-transform: uppercase;
+  text-align: center; }
+
+/* Ouverture du jeu  */
+.popin-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-image: url(../img/bg.png);
+  background-repeat: repeat;
+  background-color: #FFF; }
+  .popin-container .popin {
+    width: 500px;
+    margin: auto;
+    position: relative;
+    background-color: #FFF;
+    margin-top: 5%;
+    text-align: center;
+    padding: 50px 20px 50px 20px;
+    -webkit-box-sizing: border-box;
+    /* Fix Safari <= 5 */
+    -moz-box-sizing: border-box;
+    /* Fix Firefox <= */
+    box-sizing: border-box;
+    box-shadow: 0px 13px 21px -10px rgba(0, 0, 0, 0.4);
+    border: 1px solid #A7BE81; }
+    @media (max-width: 799px) {
+      .popin-container .popin {
+        width: 95%; } }
+    .popin-container .popin p.score {
+      font: 0.8125em Helvetica, sans-serif;
+      margin: 0;
+      padding: 5px 0 5px 0;
+      border-bottom: 1px solid #A7BE81; }
+      .popin-container .popin p.score .red {
+        color: #DF000A; }
+
+.play-button {
+  width: 50%;
+  background-color: #6DB62B;
+  color: #FFF;
+  padding: 4px;
+  font: 1.25em "Indie Flower", cursive;
+  margin: auto;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0px 13px 21px -10px rgba(0, 0, 0, 0.4); }
+  .play-button:hover {
+    background-color: #548d21;
+    box-shadow: 0px -10px 10px -10px rgba(0, 0, 0, 0.4); }
+
+/* Plateau de jeu  */
+.game-container {
+  width: 800px;
+  border: 1px solid #A7BE81;
+  -webkit-box-sizing: border-box;
+  /* Fix Safari <= 5 */
+  -moz-box-sizing: border-box;
+  /* Fix Firefox <= */
+  box-sizing: border-box;
+  box-shadow: 0px 13px 21px -10px rgba(0, 0, 0, 0.4);
+  margin: 20px auto;
+  background-color: #FFF;
+  padding-top: 20px;
+  padding-bottom: 30px; }
+  @media (max-width: 799px) {
+    .game-container {
+      width: 100%; } }
+  .game-container p {
+    clear: both;
+    text-align: center;
+    padding: 20px 10px 0px 10px;
+    margin: 0px; }
+
+.timer {
+  font: 1.5625em "Indie Flower", cursive;
+  text-align: center; }
+
+.card-container {
+  margin: auto;
+  width: 700px; }
+  @media (max-width: 799px) {
+    .card-container {
+      width: 100%; } }
+
+/* Le conteneur flip card */
+.flip-card {
+  float: left;
+  width: 100px;
+  height: 100px;
+  padding: 2px;
+  -webkit-box-sizing: border-box;
+  /* Fix Safari <= 5 */
+  -moz-box-sizing: border-box;
+  /* Fix Firefox <= */
+  box-sizing: border-box;
+  perspective: 1000px; }
+  @media (max-width: 799px) {
+    .flip-card {
+      width: 25vw;
+      height: 25vw;
+      /* les unités de mesure vw et vh liées à la fenêtre de visualisation, introduites en CSS3. 
+      On dit qu'une carte doit être 1/4 la fenêtre de visualisation, en largeur et en hauteur, parce que nous les voulons carrés. 
+      Facile de faire du responsive ... */ } }
+
+/* Ce conteneur est nécessaire pour positionner la face avant et la face arrière de al carte */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  border-radius: 5px;
+  cursor: pointer; }
+
+/*Pour un retournement horizontal au click */
+.rotate180 {
+  transform: rotateY(180deg);
+  border: 1px solid #A7BE81;
+  -webkit-box-sizing: border-box;
+  /* Fix Safari <= 5 */
+  -moz-box-sizing: border-box;
+  /* Fix Firefox <= */
+  box-sizing: border-box;
+  -webkit-transform: rotateY(180deg); }
+
+/* Positionner les deux côtés de la carte */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Pour Safari */
+  -moz-backface-visibility: hidden;
+  /* Pour Firefox */
+  background-color: #FFF;
+  border-radius: 5px; }
+
+/* Style des deux côtés de la carte  */
+.flip-card-front {
+  background-image: url(../img/front.png);
+  background-position: center center; }
+
+.flip-card-back {
+  background-image: url(../img/cards.png);
+  transform: rotateY(180deg);
+  background-size: 100%; }
+
+/*  Attention : nous utilisons une seule image pour tous les fruits (sprite). Son positionnement est géré par js */
+#progressBar {
+  width: 80%;
+  margin: 0px auto;
+  height: 22px;
+  background-color: #eeeeee; }
+  #progressBar .bar {
+    height: 100%;
+    text-align: right;
+    padding: 0 10px;
+    line-height: 22px;
+    /* la même que #progressBar height pour que le texte soit aligné au milieu */
+    width: 0;
+    background-color: #A7BE81;
+    box-sizing: border-box;
+    color: #FFF; }
+
+/* Modal */
+.modal {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 20;
+  overflow: auto;
+  /* s'il le faut... */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Black w/ opacity */
+  /* Modal Content */
+  /* Modal Animation */ }
+  .modal .modal-content {
+    width: 500px;
+    margin: auto;
+    position: relative;
+    background-color: #FFF;
+    margin-top: 5%;
+    text-align: center;
+    padding: 0px;
+    -webkit-box-sizing: border-box;
+    /* Fix Safari <= 5 */
+    -moz-box-sizing: border-box;
+    /* Fix Firefox <= */
+    box-sizing: border-box;
+    box-shadow: 0px 13px 21px -10px rgba(0, 0, 0, 0.4);
+    border: 1px solid #A7BE81;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s; }
+    @media (max-width: 799px) {
+      .modal .modal-content {
+        width: 95%; } }
+    @media (max-width: 799px) {
+      .modal .modal-content {
+        width: 95%; } }
+    .modal .modal-content .modal-header {
+      padding: 50px 20px 0px 20px;
+      /* Close Button */ }
+      .modal .modal-content .modal-header .close {
+        color: #555;
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        font: 1.875em "Indie Flower", cursive; }
+      .modal .modal-content .modal-header:hover {
+        color: #548d21;
+        cursor: pointer; }
+    .modal .modal-content .modal-body {
+      padding: 2px 16px; }
+      .modal .modal-content .modal-body .timer {
+        font: 2.8125em "Indie Flower", cursive;
+        color: #ff464e; }
+    .modal .modal-content .modal-footer {
+      padding: 0px 20px 50px 20px; }
+@-webkit-keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0; }
+  to {
+    top: 0;
+    opacity: 1; } }
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0; }
+  to {
+    top: 0;
+    opacity: 1; } }
+/* Form */
+#score_form {
+  display: none; }
+  #score_form p {
+    padding: 0;
+    margin: 0; }
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 5px auto;
+  font: 0.75em Helvetica, sans-serif;
+  -webkit-box-sizing: border-box;
+  /* Fix Safari <= 5 */
+  -moz-box-sizing: border-box;
+  /* Fix Firefox <= */
+  box-sizing: border-box; }
+  @media (max-width: 799px) {
+    input {
+      width: 95%; } }
+
+.score-button {
+  width: 80%;
+  background-color: #DF000A;
+  color: #FFF;
+  padding: 4px;
+  font: 1.25em "Indie Flower", cursive;
+  margin: 10px auto;
+  cursor: pointer;
+  box-shadow: 0px 13px 21px -10px rgba(0, 0, 0, 0.4); }
+  .score-button:hover {
+    background-color: #c60009;
+    box-shadow: 0px -10px 10px -10px rgba(0, 0, 0, 0.4); }
+
+label {
+  display: none; }
+
+fieldset {
+  border: none; }
+
+.error {
+  font: 0.625em Helvetica, sans-serif;
+  text-transform: uppercase;
+  color: #ff464e; }
+
+/*# sourceMappingURL=main.css.map */
